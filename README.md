@@ -3,7 +3,7 @@
 EcoSwap is a full-stack web application designed for college communities to trade items (books, electronics, dorm essentials) without spending money. It promotes sustainability by extending the lifecycle of goods.
 
 ![EcoSwap Home Screen](./screenshots/home-preview.png) 
-*(Note: You should take a screenshot of your beautiful homepage and save it as home-preview.png in a folder called screenshots)*
+
 
 ## 🚀 Features
 
