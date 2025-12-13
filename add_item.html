@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>EcoSwap - Add Item</title>
+</head>
+<body>
+    <form action="add_item_process.php" method="POST" enctype="multipart/form-data">
+        <h2>List an Item for Swap</h2>
+        
+        <label for="item_name">Item Name:</label><br>
+        <input type="text" id="item_name" name="item_name" required><br><br>
+        
+        <label for="description">Description:</label><br>
+        <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
+        
+        <label for="category">Category:</label><br>
+        <input type="text" id="category" name="category"><br><br>
+        
+        <label for="condition">Condition:</label><br>
+        <select id="condition" name="condition">
+            <option value="new">New</option>
+            <option value="like-new">Like New</option>
+            <option value="used">Used</option>
+            <option value="worn">Worn</option>
+        </select><br><br>
+        
+        <label for="item_image">Item Image:</label><br>
+        <input type="file" id="item_image" name="item_image" required><br><br>
+        
+        <button type="submit">Add Item</button>
+    </form>
+</body>
+</html>
