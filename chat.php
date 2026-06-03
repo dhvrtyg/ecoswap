@@ -156,6 +156,7 @@ $stmt_rated->close();
         
         body {
             height: 100vh;
+            height: 100dvh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -171,7 +172,7 @@ $stmt_rated->close();
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            height: 100%;
+            height: auto !important;
         }
         
         .card.shadow-sm {
@@ -181,7 +182,7 @@ $stmt_rated->close();
             display: flex;
             flex-direction: column;
             flex: 1;
-            height: 100%;
+            height: auto !important;
             overflow: hidden;
         }
         
