@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes soundwave {
+        0% { transform: scale(0.8); opacity: 0.8; }
+        100% { transform: scale(1.3); opacity: 0; }
+      }
+      .wave {
+        animation: soundwave 2s infinite linear;
+        stroke: #7d9d8d;
+        transform-origin: center;
+        fill: none;
+      }
+      .wave-1 { animation-delay: 0s; }
+      .wave-2 { animation-delay: 1s; }
+    </style>
+  </defs>
+  <rect width="100" height="100" fill="#f4f7f5" rx="12"/>
+  
+  <!-- Soundwaves -->
+  <circle class="wave wave-1" cx="50" cy="58" r="18" stroke-width="2"/>
+  <circle class="wave wave-2" cx="50" cy="58" r="18" stroke-width="2"/>
+
+  <!-- Headband -->
+  <path d="M30,55 C30,30 70,30 70,55" fill="none" stroke="#3a5a40" stroke-width="4" stroke-linecap="round"/>
+  <!-- Left Ear -->
+  <rect x="25" y="50" width="10" height="18" rx="4" fill="#3a5a40"/>
+  <rect x="23" y="53" width="3" height="12" rx="1" fill="#7d9d8d"/>
+  <!-- Right Ear -->
+  <rect x="65" y="50" width="10" height="18" rx="4" fill="#3a5a40"/>
+  <rect x="74" y="53" width="3" height="12" rx="1" fill="#7d9d8d"/>
+</svg>

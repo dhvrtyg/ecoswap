@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes steamFloat {
+        0% { transform: translateY(0) scaleX(1); opacity: 0; }
+        20% { opacity: 0.5; }
+        80% { opacity: 0.3; }
+        100% { transform: translateY(-8px) scaleX(1.2); opacity: 0; }
+      }
+      .steam-line {
+        animation: steamFloat 3s ease-in-out infinite;
+        transform-origin: center bottom;
+      }
+      .steam-1 { animation-delay: 0s; }
+      .steam-2 { animation-delay: 1s; }
+      .steam-3 { animation-delay: 2s; }
+    </style>
+  </defs>
+  <rect width="100" height="100" fill="#f4f7f5" rx="12"/>
+  <path d="M35,35 L65,35 L61,65 C60,70 55,74 50,74 C45,74 40,70 39,65 Z" fill="none" stroke="#3a5a40" stroke-width="3" stroke-linejoin="round"/>
+  <path d="M65,42 C69,42 72,45 72,49 C72,53 69,56 65,56" fill="none" stroke="#3a5a40" stroke-width="3" stroke-linecap="round"/>
+  <path d="M32,78 L68,78" stroke="#3a5a40" stroke-width="3" stroke-linecap="round"/>
+  
+  <path class="steam-line steam-1" d="M43,26 C43,24 45,22 45,20 C45,18 43,18 43,16" fill="none" stroke="#7d9d8d" stroke-width="2" stroke-linecap="round"/>
+  <path class="steam-line steam-2" d="M50,26 C50,24 52,22 52,20 C52,18 50,18 50,16" fill="none" stroke="#7d9d8d" stroke-width="2" stroke-linecap="round"/>
+  <path class="steam-line steam-3" d="M57,26 C57,24 59,22 59,20 C59,18 57,18 57,16" fill="none" stroke="#7d9d8d" stroke-width="2" stroke-linecap="round"/>
+</svg>

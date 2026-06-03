@@ -19,6 +19,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
+    if (contains_bad_words($message_text)) {
+        header("Location: chat.php?swap_id=" . $swap_id . "&error=profanity");
+        exit();
+    }
+
     // Insert message into the database
     $sql = "INSERT INTO messages (swap_id, sender_id, receiver_id, message_text) VALUES (?, ?, ?, ?)";
     $stmt = $conn->prepare($sql);

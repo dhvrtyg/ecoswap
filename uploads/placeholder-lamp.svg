@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100%" height="100%">
+  <defs>
+    <style>
+      @keyframes lightPulse {
+        0%, 100% { opacity: 0.15; transform: scale(1); }
+        50% { opacity: 0.35; transform: scale(1.03); }
+      }
+      .light-ray {
+        animation: lightPulse 4s ease-in-out infinite;
+        transform-origin: 30px 42px;
+      }
+    </style>
+  </defs>
+  <rect width="100" height="100" fill="#f4f7f5" rx="12"/>
+  <!-- Base -->
+  <path d="M35,80 L65,80" stroke="#3a5a40" stroke-width="4" stroke-linecap="round"/>
+  <!-- Stem -->
+  <path d="M50,80 L50,55 L38,45" fill="none" stroke="#3a5a40" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Joint -->
+  <circle cx="50" cy="55" r="3" fill="#7d9d8d"/>
+  
+  <!-- Light Ray Glow -->
+  <path class="light-ray" d="M28,47 L5,76 L32,82 L36,52 Z" fill="#dce775" opacity="0.2"/>
+  
+  <!-- Head -->
+  <path d="M30,50 L46,40 L42,34 L26,44 Z" fill="#3a5a40" stroke="#3a5a40" stroke-width="1" stroke-linejoin="round"/>
+</svg>

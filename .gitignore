@@ -1,0 +1,6 @@
+php_runtime/
+uploads/6a20*.jpeg
+uploads/6a20*.png
+uploads/6a20*.jpg
+verify_test.php
+*verify_features.php

@@ -1,0 +1,4 @@
+php_runtime/
+.git/
+verify_test.php
+*verify_features.php

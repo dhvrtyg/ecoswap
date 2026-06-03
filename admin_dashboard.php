@@ -61,7 +61,7 @@ if (!isset($_SESSION['is_admin'])) {
                         <td><?php echo $row['user_id']; ?></td>
                         <td><?php echo htmlspecialchars($row['category']); ?></td>
                         <td><span class="badge bg-<?php echo ($row['status'] == 'swapped' ? 'warning' : 'success'); ?>"><?php echo ucfirst($row['status']); ?></span></td>
-                        <td><a href="<?php echo htmlspecialchars($row['image_url']); ?>" target="_blank">View</a></td>
+                        <td><a href="<?php echo htmlspecialchars(get_item_image($row['image_url'], $row['category'])); ?>" target="_blank">View</a></td>
                     </tr>
                 <?php endwhile; ?>
             </tbody>
