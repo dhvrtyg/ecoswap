@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-md-4 mb-4 text-center text-md-start">
                 <div class="footer-logo">eco<span style="font-style: italic;">\</span>wap</div>
-                <p class="small mt-2">A student-led initiative to reduce waste and save money through bartering.</p>
+                <p class="small mt-2">A student-led initiative to save money and share resources on a community-based open source platform.</p>
             </div>
 
             <div class="col-6 col-md-4 mb-4">

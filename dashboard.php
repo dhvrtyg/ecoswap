@@ -37,7 +37,7 @@ $stmt_user->close();
     </div>
 
     <!-- Custom styled tabs -->
-    <ul class="nav nav-pills mb-4 gap-2" id="dashboardTabs" role="tablist">
+    <ul class="nav nav-pills mb-4 gap-2 scroll-x-nowrap" id="dashboardTabs" role="tablist">
       <li class="nav-item" role="presentation">
         <button class="nav-link active rounded-pill px-4 py-2 fw-semibold shadow-sm" id="items-tab" data-bs-toggle="tab" data-bs-target="#items" type="button" role="tab" aria-selected="true">
             <i class="bi bi-tags-fill me-2"></i>Your Items
@@ -158,12 +158,12 @@ $stmt_user->close();
 
                     echo "<div class='card border-light shadow-sm p-4' style='border-radius:14px;' id='incoming-swap-{$swap_id}'>";
                     echo "<div class='row align-items-center g-3'>";
-                    echo "<div class='col'>";
+                    echo "<div class='col-12 col-md'>";
                     echo "<div class='mb-1'><a href='profile.php?id={$row['requester_id']}' class='text-success fw-bold text-decoration-none'><i class='bi bi-person-circle me-1'></i> " . htmlspecialchars($row['requester']) . "</a> offered:</div>";
                     echo "<div class='h6 fw-bold text-dark mb-0'><em>" . htmlspecialchars($row['offered_item']) . "</em> &harr; for your: <em>" . htmlspecialchars($row['requested_item']) . "</em></div>";
                     echo "</div>";
                     
-                    echo "<div class='col-md-auto d-flex flex-wrap gap-2 justify-content-end align-items-center'>";
+                    echo "<div class='col-12 col-md-auto d-flex flex-column flex-md-row gap-2 justify-content-end align-items-stretch align-items-md-center'>";
                     if ($status == 'pending') {
                         echo "<a href='chat.php?swap_id={$swap_id}' class='btn btn-outline-success btn-sm rounded-pill px-3 fw-bold'><i class='bi bi-chat-dots me-1'></i> Chat</a>";
                         echo "<a href='process_action.php?action=accept&swap_id={$swap_id}' class='btn btn-success btn-sm rounded-pill px-3 fw-bold'><i class='bi bi-check-lg me-1'></i> Accept</a>";
@@ -234,12 +234,12 @@ $stmt_user->close();
 
                     echo "<div class='card border-light shadow-sm p-4' style='border-radius:14px;' id='outgoing-swap-{$swap_id}'>";
                     echo "<div class='row align-items-center g-3'>";
-                    echo "<div class='col'>";
+                    echo "<div class='col-12 col-md'>";
                     echo "<div class='mb-1'>You offered your: <em>" . htmlspecialchars($row['my_item']) . "</em> for:</div>";
                     echo "<div class='h6 fw-bold text-dark mb-0'><em>" . htmlspecialchars($row['wanted_item']) . "</em> owned by <a href='profile.php?id={$row['owner_id']}' class='text-success fw-bold text-decoration-none'><i class='bi bi-person-circle me-1'></i> " . htmlspecialchars($row['owner']) . "</a></div>";
                     echo "</div>";
 
-                    echo "<div class='col-md-auto d-flex flex-wrap gap-2 justify-content-end align-items-center'>";
+                    echo "<div class='col-12 col-md-auto d-flex flex-column flex-md-row gap-2 justify-content-end align-items-stretch align-items-md-center'>";
                     if ($status == 'accepted') {
                         echo "<span class='badge bg-success-subtle text-success border border-success-subtle px-3 py-1.5 rounded-pill fw-bold text-uppercase me-2'><i class='bi bi-check-circle-fill me-1'></i> Accepted</span>";
                         echo "<a href='chat.php?swap_id={$swap_id}' class='btn btn-success btn-sm rounded-pill px-3 fw-bold me-2'><i class='bi bi-chat-left-text me-1'></i> Chat</a>";

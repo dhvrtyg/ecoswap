@@ -90,16 +90,16 @@ if ($stmt_rev) {
 <div class="container py-5">
     <!-- Profile Header Card -->
     <div class="card border-0 shadow-sm mb-5 p-4" style="border-radius: 20px; background: linear-gradient(135deg, #ffffff, #f9fbf9);">
-        <div class="row align-items-center g-4">
+        <div class="row align-items-center text-center text-md-start g-4">
             <!-- Profile Avatar / Initial -->
-            <div class="col-auto">
+            <div class="col-12 col-md-auto d-flex justify-content-center">
                 <div class="d-flex align-items-center justify-content-center text-white fw-bold shadow-sm" 
                      style="width: 100px; height: 100px; border-radius: 50%; font-size: 2.5rem; background: linear-gradient(135deg, var(--primary-green), var(--accent-green));">
                     <?php echo strtoupper(substr($target_user['username'], 0, 1)); ?>
                 </div>
             </div>
             <!-- User Basic Info -->
-            <div class="col">
+            <div class="col-12 col-md">
                 <h2 class="fw-bold mb-1" style="font-family: 'Playfair Display', serif; color: #2c3e50;">
                     <?php echo htmlspecialchars($target_user['username']); ?>
                     <?php if (isset($_SESSION['user_id']) && $_SESSION['user_id'] == $target_user_id): ?>
@@ -109,7 +109,7 @@ if ($stmt_rev) {
                 <p class="text-muted mb-2 small"><i class="bi bi-calendar3 me-1"></i> Swapping since <?php echo date('F Y', strtotime($target_user['created_at'])); ?></p>
                 
                 <!-- Ratings display -->
-                <div class="d-flex align-items-center gap-2">
+                <div class="d-flex align-items-center justify-content-center justify-content-md-start gap-2">
                     <div class="text-warning">
                         <?php 
                         $full_stars = floor($avg_rating);
@@ -130,12 +130,12 @@ if ($stmt_rev) {
                 </div>
             </div>
             <!-- Statistics columns -->
-            <div class="col-12 col-md-auto d-flex gap-4">
-                <div class="text-center px-4 py-3 bg-white shadow-sm border border-light rounded-4" style="min-width: 120px;">
+            <div class="col-12 col-md-auto d-flex justify-content-center justify-content-md-end gap-3 gap-sm-4">
+                <div class="text-center px-4 py-3 bg-white shadow-sm border border-light rounded-4 flex-fill flex-md-grow-0" style="min-width: 120px;">
                     <div class="h3 fw-bold text-success mb-0"><?php echo $completed_swaps; ?></div>
                     <div class="small text-muted text-uppercase fw-semibold" style="font-size:0.75rem; letter-spacing:0.5px;">Swaps Done</div>
                 </div>
-                <div class="text-center px-4 py-3 bg-white shadow-sm border border-light rounded-4" style="min-width: 120px;">
+                <div class="text-center px-4 py-3 bg-white shadow-sm border border-light rounded-4 flex-fill flex-md-grow-0" style="min-width: 120px;">
                     <div class="h3 fw-bold text-success mb-0"><?php echo count(array_filter($user_listings, function($item) { return $item['status'] === 'available'; })); ?></div>
                     <div class="small text-muted text-uppercase fw-semibold" style="font-size:0.75rem; letter-spacing:0.5px;">Available</div>
                 </div>
@@ -161,7 +161,7 @@ if ($stmt_rev) {
     <div class="tab-content" id="profileTabsContent">
         <!-- Listings tab pane -->
         <div class="tab-pane fade show active" id="listings" role="tabpanel" aria-labelledby="listings-tab">
-            <div class="row row-cols-1 row-cols-md-3 row-cols-sm-2 g-4">
+            <div class="row row-cols-2 row-cols-md-3 g-3 g-sm-4">
                 <?php if (empty($user_listings)): ?>
                     <div class="col-12 text-center py-5">
                         <div class="text-muted fs-5"><i class="bi bi-folder2-open display-4 d-block mb-3 text-secondary"></i> No listings posted by this user yet.</div>
@@ -171,29 +171,29 @@ if ($stmt_rev) {
                         <div class="col">
                             <div class="card h-100 border-0 shadow-sm overflow-hidden" style="border-radius: 16px; transition: transform 0.3s ease;">
                                 <!-- Image with Badge -->
-                                <div class="position-relative bg-light d-flex align-items-center justify-content-center" style="height: 220px; overflow: hidden;">
+                                <div class="position-relative bg-light d-flex align-items-center justify-content-center" style="height: 180px; overflow: hidden;">
                                     <img src="<?php echo htmlspecialchars($item['image_url']); ?>" alt="<?php echo htmlspecialchars($item['name']); ?>" class="w-100 h-100" style="object-fit: cover;">
-                                    <span class="position-absolute top-3 start-3 badge rounded-pill px-3 py-1 fw-bold text-uppercase <?php 
+                                    <span class="position-absolute top-3 start-3 badge rounded-pill px-2.5 py-1 fw-bold text-uppercase <?php 
                                         echo $item['status'] === 'available' ? 'bg-success' : ($item['status'] === 'pending' ? 'bg-warning text-dark' : 'bg-secondary'); 
-                                    ?>" style="font-size: 0.75rem; letter-spacing: 0.5px; top: 12px; left: 12px;">
+                                    ?>" style="font-size: 0.65rem; letter-spacing: 0.5px; top: 8px; left: 8px; z-index: 10;">
                                         <?php echo $item['status']; ?>
                                     </span>
                                 </div>
-                                <div class="card-body p-4 d-flex flex-column">
+                                <div class="card-body p-3 p-sm-4 d-flex flex-column">
                                     <!-- Category list -->
                                     <div class="mb-2">
                                         <?php 
                                         $cats = explode(',', $item['category']);
                                         foreach ($cats as $cat): 
                                         ?>
-                                            <span class="badge bg-light text-success border border-success-subtle rounded-pill py-1 px-2.5 small me-1"><?php echo htmlspecialchars(trim($cat)); ?></span>
+                                            <span class="badge bg-light text-success border border-success-subtle rounded-pill py-0.5 px-2 small me-1" style="font-size:0.65rem;"><?php echo htmlspecialchars(trim($cat)); ?></span>
                                         <?php endforeach; ?>
                                     </div>
-                                    <h5 class="card-title fw-bold text-dark mb-2"><?php echo htmlspecialchars($item['name']); ?></h5>
-                                    <p class="card-text text-muted small flex-grow-1"><?php echo htmlspecialchars(substr($item['description'], 0, 100)) . (strlen($item['description']) > 100 ? '...' : ''); ?></p>
-                                    <div class="pt-3 border-top d-flex justify-content-between align-items-center mt-3">
-                                        <span class="small text-muted"><strong class="text-success">Condition:</strong> <?php echo htmlspecialchars($item['condition']); ?></span>
-                                        <a href="items.php?id=<?php echo $item['id']; ?>" class="btn btn-outline-success btn-sm rounded-pill px-3 fw-bold">View Details</a>
+                                    <h6 class="card-title fw-bold text-dark mb-1" style="font-size: 0.95rem;"><?php echo htmlspecialchars($item['name']); ?></h6>
+                                    <p class="card-text text-muted small flex-grow-1 d-none d-sm-block"><?php echo htmlspecialchars(substr($item['description'], 0, 100)) . (strlen($item['description']) > 100 ? '...' : ''); ?></p>
+                                    <div class="pt-2 border-top d-flex flex-column flex-sm-row justify-content-between align-items-stretch align-items-sm-center mt-2 gap-2">
+                                        <span class="small text-muted" style="font-size: 0.75rem;"><strong class="text-success">Condition:</strong> <?php echo htmlspecialchars($item['condition']); ?></span>
+                                        <a href="items.php?id=<?php echo $item['id']; ?>" class="btn btn-outline-success btn-sm rounded-pill px-2.5 py-1 fw-bold text-nowrap" style="font-size: 0.75rem;">Details</a>
                                     </div>
                                 </div>
                             </div>

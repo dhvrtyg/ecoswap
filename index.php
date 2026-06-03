@@ -4,9 +4,9 @@
     <div class="hero-vector-blob-1"></div>
     <div class="hero-vector-blob-2"></div>
     <div class="hero-content">
-        <div class="mb-2" style="font-size: 1.1rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-green);">EcoSwap Platform</div>
+        <div class="mb-2" style="font-size: 1.1rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--accent-green);">Community Bartering Platform</div>
         <h1 class="display-3 mb-4 fw-bold" style="font-family: 'Playfair Display', serif; letter-spacing: -1px; line-height: 1.15; color: var(--primary-green);">Trade What You Have,<br>Get What You Need</h1>
-        <p class="fs-5 mb-4 text-muted mx-auto" style="max-width: 580px; font-weight: 400;">The premium campus platform for sustainable bartering. Connect, swap, and reduce waste in style.</p>
+        <p class="fs-5 mb-4 text-muted mx-auto" style="max-width: 580px; font-weight: 400;">The premium campus platform for community-based bartering. Connect, swap, and share on our open source platform.</p>
         
         <form action="items.php" method="GET" class="hero-search-bar">
             <input type="text" name="search" placeholder="Search books, electronics, dorm decor..." value="<?php echo isset($_GET['search']) ? htmlspecialchars($_GET['search']) : ''; ?>">

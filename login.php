@@ -107,7 +107,7 @@
                 </svg>
             </div>
             <h1 class="display-3 fw-bold" style="color: var(--primary-green); font-family: 'Playfair Display'; font-weight: 800;">Welcome Back.</h1>
-            <p class="fs-5" style="color: #4b6652; max-width: 460px;">Continue your journey towards a zero-waste campus lifestyle.</p>
+            <p class="fs-5" style="color: #4b6652; max-width: 460px;">Join our community-based, open-source campus bartering platform.</p>
         </div>
     </div>
 

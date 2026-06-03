@@ -363,11 +363,78 @@ include 'db_connect.php';
         }
 
         /* --- RESPONSIVE ADJUSTMENTS --- */
+        @media (max-width: 991.98px) {
+            .navbar-collapse {
+                background-color: white;
+                border-radius: 16px;
+                box-shadow: 0 12px 36px rgba(43, 76, 51, 0.08);
+                margin-top: 15px;
+                padding: 20px;
+                border: 1px solid var(--border-color);
+            }
+            .navbar-nav .nav-link {
+                padding: 10px 16px !important;
+                border-radius: 8px;
+                font-weight: 600;
+            }
+            .navbar-nav .nav-link:hover {
+                background-color: var(--sage-light);
+                color: var(--primary-green) !important;
+            }
+        }
+
         @media (max-width: 768px) {
-            .hero-section { height: 70vh; }
-            .display-3 { font-size: 2.4rem; }
-            .cat-circle { width: 64px; height: 64px; font-size: 1.5rem; }
-            .step-card { padding: 30px 20px; }
+            .hero-section { 
+                height: auto; 
+                min-height: 55vh; 
+                padding: 60px 0; 
+                display: flex;
+                align-items: center;
+            }
+            .display-3 { font-size: calc(1.8rem + 2vw) !important; }
+            .display-5 { font-size: calc(1.5rem + 1.5vw) !important; }
+            .display-6 { font-size: calc(1.3rem + 1vw) !important; }
+            .cat-circle { width: 60px; height: 60px; font-size: 1.4rem; border-radius: 16px; margin-bottom: 12px; }
+            .step-card { padding: 25px 20px; }
+            
+            /* Tighten up spacing on mobile views */
+            .py-5 { padding-top: 2.5rem !important; padding-bottom: 2.5rem !important; }
+            .mb-5 { margin-bottom: 2.5rem !important; }
+            .my-5 { margin-top: 2.5rem !important; margin-bottom: 2.5rem !important; }
+        }
+
+        @media (max-width: 576px) {
+            .hero-search-bar {
+                width: 100% !important;
+                margin-top: 20px !important;
+                padding: 4px 8px !important;
+            }
+            .hero-search-bar input {
+                padding: 8px 10px !important;
+                font-size: 0.9rem !important;
+            }
+            .hero-search-bar button {
+                width: 38px !important;
+                height: 38px !important;
+            }
+            .split-form {
+                padding: 30px 20px !important;
+            }
+        }
+
+        /* Horizontal scrolling utilities */
+        .scroll-x-nowrap {
+            display: flex !important;
+            flex-wrap: nowrap !important;
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+        .scroll-x-nowrap::-webkit-scrollbar {
+            display: none;
+        }
+        .scroll-x-nowrap .nav-item {
+            flex: 0 0 auto;
         }
     </style>
 </head>

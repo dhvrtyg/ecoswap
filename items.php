@@ -122,100 +122,157 @@ $result_items = $stmt_items->get_result();
         </div>
     </div>
 
+<style>
+    @media (max-width: 767.98px) {
+        .item-card {
+            border-radius: 16px !important;
+        }
+        .item-card .card-img-top {
+            height: 130px !important;
+            padding: 10px !important;
+        }
+        .item-card .card-img-top img {
+            max-height: 110px !important;
+        }
+        .item-card .card-body {
+            padding: 12px !important;
+        }
+        .item-card .card-footer {
+            padding: 0 12px 12px 12px !important;
+        }
+        .item-card .card-title {
+            font-size: 0.95rem !important;
+            margin-bottom: 4px !important;
+        }
+        .item-card .card-text {
+            font-size: 0.75rem !important;
+            margin-bottom: 8px !important;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            height: 36px;
+        }
+        .item-card .card-footer .btn {
+            font-size: 0.8rem !important;
+            padding: 6px 12px !important;
+        }
+        .item-card .badge.position-absolute {
+            font-size: 0.6rem !important;
+            padding: 4px 8px !important;
+            top: 10px !important;
+            left: 10px !important;
+        }
+        .item-card .badge.position-absolute[style*="right"] {
+            right: 10px !important;
+            left: auto !important;
+        }
+    }
+</style>
+
     <div class="row g-4">
         <!-- Sidebar Filters -->
         <div class="col-lg-3">
-            <div class="card shadow-sm border-0 p-4 sticky-lg-top" style="top: 100px; border-radius: 16px; background-color: white;">
-                <h5 class="fw-bold mb-4" style="color: var(--primary-green); font-family: 'Playfair Display'; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Filters</h5>
-                
-                <form action="items.php" method="GET">
-                    <!-- Search query -->
-                    <div class="mb-3">
-                        <label for="searchQuery" class="form-label small fw-bold text-uppercase" style="letter-spacing: 0.5px;">Search keyword</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 py-2" id="searchQuery" name="search" placeholder="Type here..." value="<?php echo htmlspecialchars($search); ?>" style="border-radius: 8px 0 0 8px;">
-                            <span class="input-group-text bg-light border-0"><i class="bi bi-search text-muted"></i></span>
-                        </div>
-                    </div>
-
-                    <!-- Category selection (Checkboxes) -->
-                    <div class="mb-3">
-                        <label class="form-label small fw-bold text-uppercase" style="letter-spacing: 0.5px;">Category</label>
-                        <div class="bg-light p-3 border-0" style="border-radius: 8px;">
-                            <div class="form-check mb-1">
-                                <input class="form-check-input" type="checkbox" id="catAll" name="category_all" value="1" <?php echo empty($categories) ? 'checked' : ''; ?> onchange="if(this.checked){ document.querySelectorAll('.cat-check').forEach(c => c.checked = false); }">
-                                <label class="form-check-label small" for="catAll">All Categories</label>
-                            </div>
-                            <div class="form-check mb-1">
-                                <input class="form-check-input cat-check" type="checkbox" name="category[]" value="Books" id="catBooks" <?php echo in_array('Books', $categories) ? 'checked' : ''; ?> onchange="document.getElementById('catAll').checked = false;">
-                                <label class="form-check-label small" for="catBooks">Books</label>
-                            </div>
-                            <div class="form-check mb-1">
-                                <input class="form-check-input cat-check" type="checkbox" name="category[]" value="Electronics" id="catElectronics" <?php echo in_array('Electronics', $categories) ? 'checked' : ''; ?> onchange="document.getElementById('catAll').checked = false;">
-                                <label class="form-check-label small" for="catElectronics">Electronics</label>
-                            </div>
-                            <div class="form-check mb-1">
-                                <input class="form-check-input cat-check" type="checkbox" name="category[]" value="Stationery" id="catStationery" <?php echo in_array('Stationery', $categories) ? 'checked' : ''; ?> onchange="document.getElementById('catAll').checked = false;">
-                                <label class="form-check-label small" for="catStationery">Stationery</label>
-                            </div>
-                            <div class="form-check mb-1">
-                                <input class="form-check-input cat-check" type="checkbox" name="category[]" value="Clothing" id="catClothing" <?php echo in_array('Clothing', $categories) ? 'checked' : ''; ?> onchange="document.getElementById('catAll').checked = false;">
-                                <label class="form-check-label small" for="catClothing">Clothing</label>
-                            </div>
-                            <div class="form-check">
-                                <input class="form-check-input cat-check" type="checkbox" name="category[]" value="Dorm" id="catDorm" <?php echo in_array('Dorm', $categories) ? 'checked' : ''; ?> onchange="document.getElementById('catAll').checked = false;">
-                                <label class="form-check-label small" for="catDorm">Dorm</label>
+            <!-- Mobile Filter Toggler Button -->
+            <div class="d-lg-none mb-3">
+                <button class="btn btn-outline-success w-100 rounded-pill py-2.5 fw-semibold d-flex align-items-center justify-content-center gap-2" type="button" data-bs-toggle="collapse" data-bs-target="#mobileFiltersCollapse" aria-expanded="false" aria-controls="mobileFiltersCollapse">
+                    <i class="bi bi-sliders2-vertical"></i> Show Filters & Sort
+                </button>
+            </div>
+            
+            <div class="collapse d-lg-block" id="mobileFiltersCollapse">
+                <div class="card shadow-sm border-0 p-4 sticky-lg-top" style="top: 100px; border-radius: 16px; background-color: white;">
+                    <h5 class="fw-bold mb-4" style="color: var(--primary-green); font-family: 'Playfair Display'; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Filters</h5>
+                    
+                    <form action="items.php" method="GET">
+                        <!-- Search query -->
+                        <div class="mb-3">
+                            <label for="searchQuery" class="form-label small fw-bold text-uppercase" style="letter-spacing: 0.5px;">Search keyword</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-light border-0 py-2" id="searchQuery" name="search" placeholder="Type here..." value="<?php echo htmlspecialchars($search); ?>" style="border-radius: 8px 0 0 8px;">
+                                <span class="input-group-text bg-light border-0"><i class="bi bi-search text-muted"></i></span>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Condition selection -->
-                    <div class="mb-3">
-                        <label for="filterCondition" class="form-label small fw-bold text-uppercase" style="letter-spacing: 0.5px;">Condition</label>
-                        <select class="form-select bg-light border-0 py-2" id="filterCondition" name="condition" style="border-radius: 8px;">
-                            <option value="All" <?php echo $condition === 'All' || $condition === '' ? 'selected' : ''; ?>>All Conditions</option>
-                            <option value="New" <?php echo $condition === 'New' ? 'selected' : ''; ?>>New</option>
-                            <option value="Like New" <?php echo $condition === 'Like New' ? 'selected' : ''; ?>>Like New</option>
-                            <option value="Good" <?php echo $condition === 'Good' ? 'selected' : ''; ?>>Good</option>
-                            <option value="Fair" <?php echo $condition === 'Fair' ? 'selected' : ''; ?>>Fair</option>
-                        </select>
-                    </div>
+                        <!-- Category selection (Checkboxes) -->
+                        <div class="mb-3">
+                            <label class="form-label small fw-bold text-uppercase" style="letter-spacing: 0.5px;">Category</label>
+                            <div class="bg-light p-3 border-0" style="border-radius: 8px;">
+                                <div class="form-check mb-1">
+                                    <input class="form-check-input" type="checkbox" id="catAll" name="category_all" value="1" <?php echo empty($categories) ? 'checked' : ''; ?> onchange="if(this.checked){ document.querySelectorAll('.cat-check').forEach(c => c.checked = false); }">
+                                    <label class="form-check-label small" for="catAll">All Categories</label>
+                                </div>
+                                <div class="form-check mb-1">
+                                    <input class="form-check-input cat-check" type="checkbox" name="category[]" value="Books" id="catBooks" <?php echo in_array('Books', $categories) ? 'checked' : ''; ?> onchange="document.getElementById('catAll').checked = false;">
+                                    <label class="form-check-label small" for="catBooks">Books</label>
+                                </div>
+                                <div class="form-check mb-1">
+                                    <input class="form-check-input cat-check" type="checkbox" name="category[]" value="Electronics" id="catElectronics" <?php echo in_array('Electronics', $categories) ? 'checked' : ''; ?> onchange="document.getElementById('catAll').checked = false;">
+                                    <label class="form-check-label small" for="catElectronics">Electronics</label>
+                                </div>
+                                <div class="form-check mb-1">
+                                    <input class="form-check-input cat-check" type="checkbox" name="category[]" value="Stationery" id="catStationery" <?php echo in_array('Stationery', $categories) ? 'checked' : ''; ?> onchange="document.getElementById('catAll').checked = false;">
+                                    <label class="form-check-label small" for="catStationery">Stationery</label>
+                                </div>
+                                <div class="form-check mb-1">
+                                    <input class="form-check-input cat-check" type="checkbox" name="category[]" value="Clothing" id="catClothing" <?php echo in_array('Clothing', $categories) ? 'checked' : ''; ?> onchange="document.getElementById('catAll').checked = false;">
+                                    <label class="form-check-label small" for="catClothing">Clothing</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input cat-check" type="checkbox" name="category[]" value="Dorm" id="catDorm" <?php echo in_array('Dorm', $categories) ? 'checked' : ''; ?> onchange="document.getElementById('catAll').checked = false;">
+                                    <label class="form-check-label small" for="catDorm">Dorm</label>
+                                </div>
+                            </div>
+                        </div>
 
-                    <!-- Sort -->
-                    <div class="mb-3">
-                        <label for="filterSort" class="form-label small fw-bold text-uppercase" style="letter-spacing: 0.5px;">Sort by</label>
-                        <select class="form-select bg-light border-0 py-2" id="filterSort" name="sort" style="border-radius: 8px;">
-                            <option value="newest" <?php echo $sort === 'newest' ? 'selected' : ''; ?>>Newest Listed</option>
-                            <option value="oldest" <?php echo $sort === 'oldest' ? 'selected' : ''; ?>>Oldest Listed</option>
-                            <option value="alpha_asc" <?php echo $sort === 'alpha_asc' ? 'selected' : ''; ?>>Alphabetical (A-Z)</option>
-                            <option value="alpha_desc" <?php echo $sort === 'alpha_desc' ? 'selected' : ''; ?>>Alphabetical (Z-A)</option>
-                        </select>
-                    </div>
+                        <!-- Condition selection -->
+                        <div class="mb-3">
+                            <label for="filterCondition" class="form-label small fw-bold text-uppercase" style="letter-spacing: 0.5px;">Condition</label>
+                            <select class="form-select bg-light border-0 py-2" id="filterCondition" name="condition" style="border-radius: 8px;">
+                                <option value="All" <?php echo $condition === 'All' || $condition === '' ? 'selected' : ''; ?>>All Conditions</option>
+                                <option value="New" <?php echo $condition === 'New' ? 'selected' : ''; ?>>New</option>
+                                <option value="Like New" <?php echo $condition === 'Like New' ? 'selected' : ''; ?>>Like New</option>
+                                <option value="Good" <?php echo $condition === 'Good' ? 'selected' : ''; ?>>Good</option>
+                                <option value="Fair" <?php echo $condition === 'Fair' ? 'selected' : ''; ?>>Fair</option>
+                            </select>
+                        </div>
 
-                    <!-- Status Filter -->
-                    <div class="mb-4">
-                        <label for="filterStatus" class="form-label small fw-bold text-uppercase" style="letter-spacing: 0.5px;">Status</label>
-                        <select class="form-select bg-light border-0 py-2" id="filterStatus" name="status_filter" style="border-radius: 8px;">
-                            <option value="available" <?php echo $status_filter === 'available' ? 'selected' : ''; ?>>Available</option>
-                            <option value="swapped" <?php echo $status_filter === 'swapped' ? 'selected' : ''; ?>>Swapped</option>
-                            <option value="all" <?php echo $status_filter === 'all' ? 'selected' : ''; ?>>All Items</option>
-                        </select>
-                    </div>
+                        <!-- Sort -->
+                        <div class="mb-3">
+                            <label for="filterSort" class="form-label small fw-bold text-uppercase" style="letter-spacing: 0.5px;">Sort by</label>
+                            <select class="form-select bg-light border-0 py-2" id="filterSort" name="sort" style="border-radius: 8px;">
+                                <option value="newest" <?php echo $sort === 'newest' ? 'selected' : ''; ?>>Newest Listed</option>
+                                <option value="oldest" <?php echo $sort === 'oldest' ? 'selected' : ''; ?>>Oldest Listed</option>
+                                <option value="alpha_asc" <?php echo $sort === 'alpha_asc' ? 'selected' : ''; ?>>Alphabetical (A-Z)</option>
+                                <option value="alpha_desc" <?php echo $sort === 'alpha_desc' ? 'selected' : ''; ?>>Alphabetical (Z-A)</option>
+                            </select>
+                        </div>
 
-                    <button type="submit" class="btn btn-outline-success w-100 rounded-pill py-2 fw-semibold">Apply Filters</button>
-                    <a href="items.php" class="btn btn-link w-100 text-center text-muted small mt-2 text-decoration-none">Reset All</a>
-                </form>
+                        <!-- Status Filter -->
+                        <div class="mb-4">
+                            <label for="filterStatus" class="form-label small fw-bold text-uppercase" style="letter-spacing: 0.5px;">Status</label>
+                            <select class="form-select bg-light border-0 py-2" id="filterStatus" name="status_filter" style="border-radius: 8px;">
+                                <option value="available" <?php echo $status_filter === 'available' ? 'selected' : ''; ?>>Available</option>
+                                <option value="swapped" <?php echo $status_filter === 'swapped' ? 'selected' : ''; ?>>Swapped</option>
+                                <option value="all" <?php echo $status_filter === 'all' ? 'selected' : ''; ?>>All Items</option>
+                            </select>
+                        </div>
+
+                        <button type="submit" class="btn btn-outline-success w-100 rounded-pill py-2 fw-semibold">Apply Filters</button>
+                        <a href="items.php" class="btn btn-link w-100 text-center text-muted small mt-2 text-decoration-none">Reset All</a>
+                    </form>
+                </div>
             </div>
         </div>
 
         <!-- Catalog Results -->
         <div class="col-lg-9">
             <?php if ($result_items->num_rows > 0): ?>
-                <div class="row g-4">
+                <div class="row g-3 g-md-4">
                     <?php while($row = $result_items->fetch_assoc()): ?>
                         <?php $img_src = htmlspecialchars(get_item_image($row["image_url"], $row["category"])); ?>
-                        <div class="col-md-6 col-xl-4">
-                            <div class="card h-100 shadow-sm border-0 position-relative overflow-hidden">
+                        <div class="col-6 col-md-6 col-xl-4">
+                            <div class="card item-card h-100 shadow-sm border-0 position-relative overflow-hidden">
                                 
                                 <!-- Category Badge floating on card -->
                                 <span class="badge position-absolute bg-white text-dark shadow-sm px-3 py-2 rounded-pill font-monospace" style="top: 15px; left: 15px; z-index: 5; font-size: 0.7rem; font-weight: 700; border: 1px solid var(--border-color);">
@@ -265,7 +322,7 @@ $result_items = $stmt_items->get_result();
                         <ul class="pagination pagination-md shadow-sm rounded-pill" style="overflow: hidden;">
                             <!-- Previous page -->
                             <li class="page-item <?php echo $page <= 1 ? 'disabled' : ''; ?>">
-                                <a class="page-link border-0 text-success bg-white px-3" href="items.php?search=<?php echo urlencode($search); ?>&category=<?php echo urlencode($category); ?>&condition=<?php echo urlencode($condition); ?>&sort=<?php echo urlencode($sort); ?>&show_all=<?php echo $show_all ? '1' : '0'; ?>&page=<?php echo $page - 1; ?>">
+                                <a class="page-link border-0 text-success bg-white px-3" href="items.php?<?php echo http_build_query(array_merge($_GET, ['page' => $page - 1])); ?>">
                                     <i class="bi bi-chevron-left"></i>
                                 </a>
                             </li>
@@ -273,7 +330,7 @@ $result_items = $stmt_items->get_result();
                             <!-- Page numbers -->
                             <?php for ($i = 1; $i <= $total_pages; $i++): ?>
                                 <li class="page-item <?php echo $page == $i ? 'active' : ''; ?>">
-                                    <a class="page-link border-0 px-3 <?php echo $page == $i ? 'bg-success text-white' : 'text-success bg-white'; ?>" href="items.php?search=<?php echo urlencode($search); ?>&category=<?php echo urlencode($category); ?>&condition=<?php echo urlencode($condition); ?>&sort=<?php echo urlencode($sort); ?>&show_all=<?php echo $show_all ? '1' : '0'; ?>&page=<?php echo $i; ?>">
+                                    <a class="page-link border-0 px-3 <?php echo $page == $i ? 'bg-success text-white' : 'text-success bg-white'; ?>" href="items.php?<?php echo http_build_query(array_merge($_GET, ['page' => $i])); ?>">
                                         <?php echo $i; ?>
                                     </a>
                                 </li>
@@ -281,7 +338,7 @@ $result_items = $stmt_items->get_result();
 
                             <!-- Next page -->
                             <li class="page-item <?php echo $page >= $total_pages ? 'disabled' : ''; ?>">
-                                <a class="page-link border-0 text-success bg-white px-3" href="items.php?search=<?php echo urlencode($search); ?>&category=<?php echo urlencode($category); ?>&condition=<?php echo urlencode($condition); ?>&sort=<?php echo urlencode($sort); ?>&show_all=<?php echo $show_all ? '1' : '0'; ?>&page=<?php echo $page + 1; ?>">
+                                <a class="page-link border-0 text-success bg-white px-3" href="items.php?<?php echo http_build_query(array_merge($_GET, ['page' => $page + 1])); ?>">
                                     <i class="bi bi-chevron-right"></i>
                                 </a>
                             </li>
