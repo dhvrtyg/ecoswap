@@ -1,6 +1,6 @@
-# EcoSwap - Sustainable Bartering Platform 🌿
+# EcoSwap - Community-Based Campus Bartering Platform 🤝
 
-EcoSwap is a full-stack web application designed for college communities to trade items (books, electronics, dorm essentials) without spending money. It promotes sustainability by extending the lifecycle of goods.
+EcoSwap is a community-based, open-source campus bartering platform designed for college communities to trade items (books, electronics, dorm essentials) and share resources without spending money.
 
 ![EcoSwap Home Screen](./screenshots/home-preview.png) 
 
