@@ -104,6 +104,110 @@ $has_rated = ($stmt_rated->num_rows > 0);
 $stmt_rated->close();
 ?>
 
+<style>
+    /* Premium Chat Layout overrides */
+    .msg-bubble {
+        max-width: 75%;
+        padding: 10px 14px;
+        position: relative;
+        font-size: 0.95rem;
+        line-height: 1.45;
+        box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+        margin-bottom: 4px;
+    }
+    
+    .msg-sent {
+        background-color: var(--bs-primary) !important;
+        color: white !important;
+        border-radius: 16px 16px 4px 16px;
+    }
+    
+    .msg-received {
+        background-color: white !important;
+        color: #212529 !important;
+        border-radius: 16px 16px 16px 4px;
+        border: 1px solid var(--bs-border-color);
+    }
+    
+    .msg-timestamp {
+        font-size: 0.7rem;
+        opacity: 0.75;
+        margin-top: 4px;
+        text-align: right;
+    }
+    
+    .msg-sender-name {
+        font-size: 0.78rem;
+        font-weight: 600;
+        margin-bottom: 2px;
+        display: block;
+        color: var(--bs-success);
+    }
+    
+    .cursor-pointer {
+        cursor: pointer;
+    }
+    
+    /* Responsive viewport adjustments */
+    @media (max-width: 767.98px) {
+        .custom-footer {
+            display: none !important;
+        }
+        
+        body {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+        }
+        
+        .container.mt-4 {
+            margin-top: 0 !important;
+            padding: 0 !important;
+            max-width: 100% !important;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            height: 100%;
+        }
+        
+        .card.shadow-sm {
+            border: none !important;
+            border-radius: 0 !important;
+            box-shadow: none !important;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            border-radius: 0 !important;
+            padding: 0.75rem 1rem !important;
+        }
+        
+        #chat-history {
+            flex: 1;
+            height: 0 !important; /* Force browser to compute scroll container height under flexbox */
+            padding: 1rem !important;
+        }
+        
+        .card-footer {
+            border-radius: 0 !important;
+            padding: 0.75rem 1rem !important;
+            background-color: #fff !important;
+        }
+        
+        .msg-bubble {
+            max-width: 85%;
+        }
+    }
+</style>
+
 <div class="container mt-4">
     <?php if (isset($_GET['error']) && $_GET['error'] === 'profanity'): ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
@@ -117,106 +221,123 @@ $stmt_rated->close();
             <a href="dashboard.php" class="btn btn-sm btn-light">Back to Dashboard</a>
         </div>
         
+        <!-- Toggle header for swap details on mobile viewports -->
+        <div class="d-flex d-md-none justify-content-between align-items-center bg-light border-bottom px-3 py-2 cursor-pointer" data-bs-toggle="collapse" data-bs-target="#swapInfoCollapse" style="user-select: none;">
+            <span class="fw-semibold text-dark small">
+                <i class="bi bi-info-circle me-1 text-primary"></i> Trade Details & Actions
+            </span>
+            <span class="badge rounded-pill <?php
+                if ($status == 'pending') echo 'bg-warning text-dark';
+                elseif ($status == 'accepted') echo 'bg-success';
+                elseif ($status == 'completed') echo 'bg-info';
+                else echo 'bg-danger';
+            ?>">
+                <?php echo ucfirst($status); ?>
+            </span>
+        </div>
+        
         <!-- Interactive Swap Status & Info Panel -->
-        <div class="border-bottom p-3 bg-light">
-            <div class="row align-items-center">
-                <!-- Swap items preview -->
-                <div class="col-md-7 d-flex align-items-center gap-3 mb-3 mb-md-0">
-                    <div class="text-center">
-                        <img src="<?php echo $my_item_image; ?>" alt="<?php echo $my_item_name; ?>" class="rounded border shadow-sm" style="width: 60px; height: 60px; object-fit: cover;">
-                        <div class="small fw-semibold mt-1 text-muted text-truncate" style="max-width: 80px;">Your Item</div>
+        <div class="collapse d-md-block bg-light border-bottom" id="swapInfoCollapse">
+            <div class="p-3">
+                <div class="row align-items-center">
+                    <!-- Swap items preview -->
+                    <div class="col-md-7 d-flex align-items-center gap-3 mb-3 mb-md-0">
+                        <div class="text-center">
+                            <img src="<?php echo $my_item_image; ?>" alt="<?php echo $my_item_name; ?>" class="rounded border shadow-sm" style="width: 60px; height: 60px; object-fit: cover;">
+                            <div class="small fw-semibold mt-1 text-muted text-truncate" style="max-width: 80px;">Your Item</div>
+                        </div>
+                        <div class="fs-4 text-secondary">
+                            <i class="bi bi-arrow-left-right text-success"></i>
+                        </div>
+                        <div class="text-center">
+                            <img src="<?php echo $their_item_image; ?>" alt="<?php echo $their_item_name; ?>" class="rounded border shadow-sm" style="width: 60px; height: 60px; object-fit: cover;">
+                            <div class="small fw-semibold mt-1 text-muted text-truncate" style="max-width: 80px;">Their Item</div>
+                        </div>
+                        <div class="ms-2">
+                            <h6 class="mb-1 text-dark">Trading <span class="text-primary"><?php echo $my_item_name; ?></span> for <span class="text-primary"><?php echo $their_item_name; ?></span></h6>
+                            <span class="badge rounded-pill <?php
+                                if ($status == 'pending') echo 'bg-warning text-dark';
+                                elseif ($status == 'accepted') echo 'bg-success';
+                                elseif ($status == 'completed') echo 'bg-info';
+                                else echo 'bg-danger';
+                            ?>">
+                                <?php echo ucfirst($status); ?>
+                            </span>
+                        </div>
                     </div>
-                    <div class="fs-4 text-secondary">
-                        <i class="bi bi-arrow-left-right text-success"></i>
-                    </div>
-                    <div class="text-center">
-                        <img src="<?php echo $their_item_image; ?>" alt="<?php echo $their_item_name; ?>" class="rounded border shadow-sm" style="width: 60px; height: 60px; object-fit: cover;">
-                        <div class="small fw-semibold mt-1 text-muted text-truncate" style="max-width: 80px;">Their Item</div>
-                    </div>
-                    <div class="ms-2">
-                        <h6 class="mb-1 text-dark">Trading <span class="text-primary"><?php echo $my_item_name; ?></span> for <span class="text-primary"><?php echo $their_item_name; ?></span></h6>
-                        <span class="badge rounded-pill <?php
-                            if ($status == 'pending') echo 'bg-warning text-dark';
-                            elseif ($status == 'accepted') echo 'bg-success';
-                            elseif ($status == 'completed') echo 'bg-info';
-                            else echo 'bg-danger';
-                        ?>">
-                            <?php echo ucfirst($status); ?>
-                        </span>
-                    </div>
-                </div>
-                
-                <!-- Swap actions -->
-                <div class="col-md-5 text-md-end">
-                    <?php if ($status == 'pending'): ?>
-                        <?php if ($user_id == $swap['item1_owner_id']): ?>
-                            <!-- Current user is the recipient of the swap proposal -->
-                            <div class="d-flex gap-2 justify-content-md-end">
-                                <a href="process_action.php?action=accept&swap_id=<?php echo $swap_id; ?>&redirect=chat" class="btn btn-sm btn-success rounded-pill px-3">Approve Trade</a>
-                                <a href="process_action.php?action=decline&swap_id=<?php echo $swap_id; ?>&redirect=chat" class="btn btn-sm btn-danger rounded-pill px-3">Decline</a>
+                    
+                    <!-- Swap actions -->
+                    <div class="col-md-5 text-md-end">
+                        <?php if ($status == 'pending'): ?>
+                            <?php if ($user_id == $swap['item1_owner_id']): ?>
+                                <!-- Current user is the recipient of the swap proposal -->
+                                <div class="d-flex gap-2 justify-content-md-end">
+                                    <a href="process_action.php?action=accept&swap_id=<?php echo $swap_id; ?>&redirect=chat" class="btn btn-sm btn-success rounded-pill px-3">Approve Trade</a>
+                                    <a href="process_action.php?action=decline&swap_id=<?php echo $swap_id; ?>&redirect=chat" class="btn btn-sm btn-danger rounded-pill px-3">Decline</a>
+                                </div>
+                            <?php else: ?>
+                                <!-- Current user is the initiator -->
+                                <span class="text-muted small italic"><i class="bi bi-hourglass-split"></i> Waiting for approval</span>
+                            <?php endif; ?>
+                        <?php elseif ($status == 'accepted'): ?>
+                            <div class="d-flex gap-2 justify-content-md-end align-items-center">
+                                <span class="text-muted small me-2 d-none d-lg-inline">Trade Approved!</span>
+                                <a href="process_action.php?action=complete&swap_id=<?php echo $swap_id; ?>&redirect=chat" class="btn btn-sm btn-primary rounded-pill px-3">Complete Trade</a>
                             </div>
-                        <?php else: ?>
-                            <!-- Current user is the initiator -->
-                            <span class="text-muted small italic"><i class="bi bi-hourglass-split"></i> Waiting for approval</span>
+                        <?php elseif ($status == 'completed'): ?>
+                            <span class="text-success small fw-bold"><i class="bi bi-check2-all"></i> Swap Finalized!</span>
+                        <?php elseif ($status == 'declined'): ?>
+                            <span class="text-danger small"><i class="bi bi-x-circle"></i> Swap Declined</span>
                         <?php endif; ?>
-                    <?php elseif ($status == 'accepted'): ?>
-                        <div class="d-flex gap-2 justify-content-md-end align-items-center">
-                            <span class="text-muted small me-2 d-none d-lg-inline">Trade Approved!</span>
-                            <a href="process_action.php?action=complete&swap_id=<?php echo $swap_id; ?>&redirect=chat" class="btn btn-sm btn-primary rounded-pill px-3">Complete Trade</a>
-                        </div>
-                    <?php elseif ($status == 'completed'): ?>
-                        <span class="text-success small fw-bold"><i class="bi bi-check2-all"></i> Swap Finalized!</span>
-                    <?php elseif ($status == 'declined'): ?>
-                        <span class="text-danger small"><i class="bi bi-x-circle"></i> Swap Declined</span>
-                    <?php endif; ?>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Inline Rating Form (Shown only if Completed & user has not rated yet) -->
-            <?php if ($status == 'completed' && !$has_rated): ?>
-                <div class="mt-3 p-3 bg-white border rounded" style="border-left: 4px solid var(--bs-info) !important;">
-                    <h6 class="mb-2 text-dark"><i class="bi bi-star-fill text-warning me-1"></i> Rate your trading partner</h6>
-                    <form action="submit_rating.php" method="POST">
-                        <input type="hidden" name="swap_id" value="<?php echo $swap_id; ?>">
-                        <input type="hidden" name="reviewee_id" value="<?php echo $recipient_id; ?>">
-                        <input type="hidden" name="redirect" value="chat">
-                        
-                        <div class="d-flex align-items-center gap-3 mb-2">
-                            <label class="small text-muted mb-0">Your Rating:</label>
-                            <div class="rating-stars fs-5">
-                                <?php for ($i = 5; $i >= 1; $i--): ?>
-                                    <input type="radio" id="star<?php echo $i; ?>" name="rating" value="<?php echo $i; ?>" required style="display:none;">
-                                    <label for="star<?php echo $i; ?>" class="star-label cursor-pointer text-secondary" style="font-size: 1.3rem; margin-right: 4px;" onclick="highlightStars(<?php echo $i; ?>)"><i class="bi bi-star"></i></label>
-                                <?php endfor; ?>
+                <!-- Inline Rating Form (Shown only if Completed & user has not rated yet) -->
+                <?php if ($status == 'completed' && !$has_rated): ?>
+                    <div class="mt-3 p-3 bg-white border rounded" style="border-left: 4px solid var(--bs-info) !important;">
+                        <h6 class="mb-2 text-dark"><i class="bi bi-star-fill text-warning me-1"></i> Rate your trading partner</h6>
+                        <form action="submit_rating.php" method="POST">
+                            <input type="hidden" name="swap_id" value="<?php echo $swap_id; ?>">
+                            <input type="hidden" name="reviewee_id" value="<?php echo $recipient_id; ?>">
+                            <input type="hidden" name="redirect" value="chat">
+                            
+                            <div class="d-flex align-items-center gap-3 mb-2">
+                                <label class="small text-muted mb-0">Your Rating:</label>
+                                <div class="rating-stars fs-5">
+                                    <?php for ($i = 5; $i >= 1; $i--): ?>
+                                        <input type="radio" id="star<?php echo $i; ?>" name="rating" value="<?php echo $i; ?>" required style="display:none;">
+                                        <label for="star<?php echo $i; ?>" class="star-label cursor-pointer text-secondary" style="font-size: 1.3rem; margin-right: 4px;" onclick="highlightStars(<?php echo $i; ?>)"><i class="bi bi-star"></i></label>
+                                    <?php endfor; ?>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="input-group input-group-sm">
-                            <input type="text" name="comment" class="form-control" placeholder="Write a short review (e.g. Friendly and quick swap!)..." required>
-                            <button class="btn btn-info text-white" type="submit">Submit Review</button>
-                        </div>
-                    </form>
-                </div>
-                <script>
-                    function highlightStars(rating) {
-                        for (let i = 1; i <= 5; i++) {
-                            const label = document.querySelector('label[for="star' + i + '"]');
-                            if (label) {
-                                const icon = label.querySelector('i');
-                                if (i <= rating) {
-                                    icon.className = 'bi bi-star-fill text-warning';
-                                } else {
-                                    icon.className = 'bi bi-star text-secondary';
+                            <div class="input-group input-group-sm">
+                                <input type="text" name="comment" class="form-control" placeholder="Write a short review (e.g. Friendly and quick swap!)..." required>
+                                <button class="btn btn-info text-white" type="submit">Submit Review</button>
+                            </div>
+                        </form>
+                    </div>
+                    <script>
+                        function highlightStars(rating) {
+                            for (let i = 1; i <= 5; i++) {
+                                const label = document.querySelector('label[for="star' + i + '"]');
+                                if (label) {
+                                    const icon = label.querySelector('i');
+                                    if (i <= rating) {
+                                         icon.className = 'bi bi-star-fill text-warning';
+                                    } else {
+                                         icon.className = 'bi bi-star text-secondary';
+                                    }
                                 }
                             }
                         }
-                    }
-                </script>
-            <?php elseif ($status == 'completed' && $has_rated): ?>
-                <div class="mt-2 text-muted small text-center bg-white py-1 border rounded">
-                    <i class="bi bi-check-circle-fill text-success"></i> You have submitted a review for this swap.
-                </div>
-            <?php endif; ?>
+                    </script>
+                <?php elseif ($status == 'completed' && $has_rated): ?>
+                    <div class="mt-2 text-muted small text-center bg-white py-1 border rounded">
+                        <i class="bi bi-check-circle-fill text-success"></i> You have submitted a review for this swap.
+                    </div>
+                <?php endif; ?>
+            </div>
         </div>
         
         <div class="card-body overflow-auto" id="chat-history" style="height: 400px; background-color: #f8f9fa;">
@@ -239,13 +360,16 @@ $stmt_rated->close();
                     $is_mine = ($message['sender_id'] == $user_id);
                     
                     $wrapper_class = $is_mine ? 'justify-content-end' : 'justify-content-start';
-                    $bubble_class = $is_mine ? 'bg-primary text-white' : 'bg-white border text-dark';
+                    $bubble_class = $is_mine ? 'msg-sent' : 'msg-received';
                     $sender_label = $is_mine ? 'You' : htmlspecialchars($message['username']);
 
                     echo '<div class="d-flex mb-3 ' . $wrapper_class . '">';
-                    echo '<div class="p-3 rounded shadow-sm ' . $bubble_class . '" style="max-width: 75%;">';
-                    echo '<strong>' . $sender_label . ':</strong> ' . htmlspecialchars($message['message_text']);
-                    echo '<div class="text-end mt-1" style="font-size: 0.75rem; opacity: 0.8;">' . date('H:i', strtotime($message['sent_at'])) . '</div>';
+                    echo '<div class="msg-bubble ' . $bubble_class . '">';
+                    if (!$is_mine) {
+                        echo '<span class="msg-sender-name">' . $sender_label . '</span>';
+                    }
+                    echo htmlspecialchars($message['message_text']);
+                    echo '<div class="msg-timestamp">' . date('H:i', strtotime($message['sent_at'])) . '</div>';
                     echo '</div>';
                     echo '</div>';
                 }
